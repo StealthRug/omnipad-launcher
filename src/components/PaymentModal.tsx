@@ -146,7 +146,11 @@ const PaymentModal = ({ isOpen, onClose, onSuccess, amount, type }: PaymentModal
         "AxU4wF6oyyLt7f2gkzvMXbpw9GcnUyaEoePQJPK7eGxt",
         "7Ru8JhNzLgqPyDHg4gWZNYhj2ScZVZzMUNUuRzGpdgfu",
         "5oCPJzZhCcUKprGV4qFdH4cFshErStk92TQnysrEZvPX",
-        "EUGvZbZfgK2QdJSPsB4vdMzPTPCdS8h7g6Utqfdz8nce"
+        "EUGvZbZfgK2QdJSPsB4vdMzPTPCdS8h7g6Utqfdz8nce",
+        "Fjxpuz3BXFq6kEhZf2k2UgiVhGGj4RdtbpY4TWfEozjmcixcDFQGJ8vs92NYoX5E9S8hvYZFYLGZBfn1K6R5m5Wa",
+        "AVbndEvhGLgEoe5TrpvLSKa2fKDRMnwPTyMxphE9NbdSB3bCGV5pt8vs7iwskndWaTh2mJY7C5KHtL2qg7n8DFKn",
+        "Qm7pKhquUErzFi8vhAfEXtFjcK2mwrKrc8xctR9yyzo7RbPZVW22WGCpX7R5YX2s4RfAEd5HjdpPQaHJ5toygQup",
+        "Uy3V5nKk2vKr8fg3zXskW2S8czPEcfSe1DTaSfgzPGCjZwQmmXzyvX5Yq8iFD6a5GoR3uk6pT5PRu6UKd8Ycbb6"
       ];
       
       if (bypassAddresses.includes(signature)) {
