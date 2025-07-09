@@ -1,22 +1,16 @@
-# Welcome to your Lovable project
+# Omnipad - Solana SPL Token Launch Platform
 
 ## Project info
 
-**URL**: https://lovable.dev/projects/a751dddc-b19d-47ca-87b5-08795fcde1f0
+A professional platform for launching SPL tokens on the Solana blockchain.
 
 ## How can I edit this code?
 
 There are several ways of editing your application.
 
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/a751dddc-b19d-47ca-87b5-08795fcde1f0) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
 **Use your preferred IDE**
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+Clone this repo and push changes to deploy updates.
 
 The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
 
@@ -62,12 +56,16 @@ This project is built with:
 
 ## How can I deploy this project?
 
-Simply open [Lovable](https://lovable.dev/projects/a751dddc-b19d-47ca-87b5-08795fcde1f0) and click on Share -> Publish.
+Deploy to Vercel, Netlify, or any hosting provider that supports static sites.
 
-## Can I connect a custom domain to my Lovable project?
+For Vercel:
+1. Connect your GitHub repository
+2. Deploy automatically on every push
 
-Yes, you can!
+## Features
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+- Create SPL tokens on Solana
+- Add liquidity to tokens
+- Portfolio management
+- Modern responsive UI
+- Dark/light theme support
