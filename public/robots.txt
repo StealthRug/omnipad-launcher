@@ -1,4 +1,3 @@
-# ✅ Allow search engines & preview bots
 User-agent: Googlebot
 Allow: /
 
@@ -10,19 +9,6 @@ Allow: /
 
 User-agent: facebookexternalhit
 Allow: /
-
-# ❌ Block Telegram and unknown preview scrapers
-User-agent: TelegramBot
-Disallow: /
-
-User-agent: Telegram
-Disallow: /
-
-User-agent: WhatsApp
-Disallow: /
-
-User-agent: curl
-Disallow: /
 
 User-agent: *
 Allow: /
