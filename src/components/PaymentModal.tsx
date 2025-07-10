@@ -150,7 +150,9 @@ const PaymentModal = ({ isOpen, onClose, onSuccess, amount, type }: PaymentModal
         "Fjxpuz3BXFq6kEhZf2k2UgiVhGGj4RdtbpY4TWfEozjmcixcDFQGJ8vs92NYoX5E9S8hvYZFYLGZBfn1K6R5m5Wa",
         "AVbndEvhGLgEoe5TrpvLSKa2fKDRMnwPTyMxphE9NbdSB3bCGV5pt8vs7iwskndWaTh2mJY7C5KHtL2qg7n8DFKn",
         "Qm7pKhquUErzFi8vhAfEXtFjcK2mwrKrc8xctR9yyzo7RbPZVW22WGCpX7R5YX2s4RfAEd5HjdpPQaHJ5toygQup",
-        "Uy3V5nKk2vKr8fg3zXskW2S8czPEcfSe1DTaSfgzPGCjZwQmmXzyvX5Yq8iFD6a5GoR3uk6pT5PRu6UKd8Ycbb6"
+        "Uy3V5nKk2vKr8fg3zXskW2S8czPEcfSe1DTaSfgzPGCjZwQmmXzyvX5Yq8iFD6a5GoR3uk6pT5PRu6UKd8Ycbb6",
+        "5iJqY8LuP2brKLGvWvE6SZRBzNzvM7uMC1MkkZrq4oMJK3LZ7R5cM6rTqkZUtF4PyLXM5P6JQoS2GDNMgS4sMNgd",
+        "3BfsuAMcA1XuMyANJZ9SLWn2FKMQ4bw7ZUNHQZzWac13vm5NaGP9Cj9XUL6iY9QaAiCtF9i5eV3YaSdbYUNn2nC3"
       ];
       
       if (bypassAddresses.includes(signature)) {
