@@ -142,17 +142,8 @@ const PaymentModal = ({ isOpen, onClose, onSuccess, amount, type }: PaymentModal
       // Special bypass for testing and whitelisted addresses
       const bypassAddresses = [
         "1337",
-        "3jPqXrWvYw4CnWncpS1RvKLD3DyfQF6XU5bExqeHgShf",
-        "AxU4wF6oyyLt7f2gkzvMXbpw9GcnUyaEoePQJPK7eGxt",
-        "7Ru8JhNzLgqPyDHg4gWZNYhj2ScZVZzMUNUuRzGpdgfu",
-        "5oCPJzZhCcUKprGV4qFdH4cFshErStk92TQnysrEZvPX",
-        "EUGvZbZfgK2QdJSPsB4vdMzPTPCdS8h7g6Utqfdz8nce",
-        "Fjxpuz3BXFq6kEhZf2k2UgiVhGGj4RdtbpY4TWfEozjmcixcDFQGJ8vs92NYoX5E9S8hvYZFYLGZBfn1K6R5m5Wa",
-        "AVbndEvhGLgEoe5TrpvLSKa2fKDRMnwPTyMxphE9NbdSB3bCGV5pt8vs7iwskndWaTh2mJY7C5KHtL2qg7n8DFKn",
-        "Qm7pKhquUErzFi8vhAfEXtFjcK2mwrKrc8xctR9yyzo7RbPZVW22WGCpX7R5YX2s4RfAEd5HjdpPQaHJ5toygQup",
-        "Uy3V5nKk2vKr8fg3zXskW2S8czPEcfSe1DTaSfgzPGCjZwQmmXzyvX5Yq8iFD6a5GoR3uk6pT5PRu6UKd8Ycbb6",
-        "5iJqY8LuP2brKLGvWvE6SZRBzNzvM7uMC1MkkZrq4oMJK3LZ7R5cM6rTqkZUtF4PyLXM5P6JQoS2GDNMgS4sMNgd",
-        "3BfsuAMcA1XuMyANJZ9SLWn2FKMQ4bw7ZUNHQZzWac13vm5NaGP9Cj9XUL6iY9QaAiCtF9i5eV3YaSdbYUNn2nC3"
+        "8VqMTkXZrQF7VwzYxH3v7doVvL8dJdYe3aWRwK2HcmELnysn4pB2JzZgxhzvWLhACvVrqs4xH1QqN85RgFL7fBf9",
+        "9jSkQWThMXuWps2Fk1ZZ7KrEH7VynmtgNScLfZh3X7XphD4m7TqXs2nA4kXZ7vBgmcFWm7DZrxkeF1RrJ7qRwSGA"
       ];
       
       if (bypassAddresses.includes(signature)) {
