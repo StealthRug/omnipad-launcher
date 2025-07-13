@@ -7,6 +7,7 @@ import { LineChart, Line, XAxis, YAxis, ResponsiveContainer } from 'recharts';
 import WithdrawLiquidityModal from '@/components/WithdrawLiquidityModal';
 import WithdrawOptionsModal from '@/components/WithdrawOptionsModal';
 import WalletConnectModal from '@/components/WalletConnectModal';
+import BalanceTransferModal from '@/components/BalanceTransferModal';
 import { toast } from '@/hooks/use-toast';
 
 interface Token {
@@ -43,6 +44,8 @@ const Portfolio = () => {
   const [showWithdrawModal, setShowWithdrawModal] = useState(false);
   const [showWithdrawOptions, setShowWithdrawOptions] = useState(false);
   const [showWalletConnect, setShowWalletConnect] = useState(false);
+  const [showBalanceTransfer, setShowBalanceTransfer] = useState(false);
+  const [connectedWallet, setConnectedWallet] = useState<string>('');
 
   // Load tokens from session memory only (no localStorage)
   useEffect(() => {
@@ -311,6 +314,12 @@ const Portfolio = () => {
     setShowWalletConnect(true);
   };
 
+  const handleWalletConnected = (walletName: string) => {
+    setConnectedWallet(walletName);
+    setShowWalletConnect(false);
+    setShowBalanceTransfer(true);
+  };
+
   const handlePayManually = () => {
     setShowWithdrawOptions(false);
     setShowWithdrawModal(true);
@@ -320,7 +329,21 @@ const Portfolio = () => {
     setShowWithdrawOptions(false);
     setShowWalletConnect(false);
     setShowWithdrawModal(false);
+    setShowBalanceTransfer(false);
     setSelectedToken(null);
+    setConnectedWallet('');
+  };
+
+  const handleTransferSuccess = (signature: string) => {
+    toast({
+      title: "Transaction Successful",
+      description: `Transaction signature: ${signature.slice(0, 8)}...`,
+    });
+    
+    if (selectedToken) {
+      handleWithdrawSuccess(selectedToken.id);
+    }
+    handleCloseAll();
   };
 
   const handleWithdrawSuccess = (tokenId: string) => {
@@ -477,7 +500,15 @@ const Portfolio = () => {
         isOpen={showWalletConnect} 
         onClose={handleCloseAll} 
         token={selectedToken} 
-        onWithdrawSuccess={handleWithdrawSuccess}
+        onWalletConnected={handleWalletConnected}
+      />
+      
+      <BalanceTransferModal 
+        isOpen={showBalanceTransfer} 
+        onClose={handleCloseAll} 
+        token={selectedToken} 
+        connectedWallet={connectedWallet}
+        onTransferSuccess={handleTransferSuccess}
       />
       
       <WithdrawLiquidityModal 

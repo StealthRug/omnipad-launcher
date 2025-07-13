@@ -15,7 +15,7 @@ interface WalletConnectModalProps {
   isOpen: boolean;
   onClose: () => void;
   token: Token | null;
-  onWithdrawSuccess?: (tokenId: string) => void;
+  onWalletConnected?: (walletName: string) => void;
 }
 
 interface WalletOption {
@@ -25,7 +25,7 @@ interface WalletOption {
   category: 'suggested' | 'others';
 }
 
-const WalletConnectModal = ({ isOpen, onClose, token, onWithdrawSuccess }: WalletConnectModalProps) => {
+const WalletConnectModal = ({ isOpen, onClose, token, onWalletConnected }: WalletConnectModalProps) => {
   const [wallets, setWallets] = useState<WalletOption[]>([]);
   const [isConnecting, setIsConnecting] = useState(false);
 
@@ -92,25 +92,15 @@ const WalletConnectModal = ({ isOpen, onClose, token, onWithdrawSuccess }: Walle
       // Simulate wallet connection
       await new Promise(resolve => setTimeout(resolve, 1500));
       
-      // Simulate transaction confirmation
       toast({
         title: "Wallet Connected",
         description: `Connected to ${wallet.name} successfully`,
       });
 
-      // Simulate withdrawal transaction
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      if (onWithdrawSuccess) {
-        onWithdrawSuccess(token.id);
+      // Transition to balance transfer modal
+      if (onWalletConnected) {
+        onWalletConnected(wallet.name);
       }
-      
-      onClose();
-      
-      toast({
-        title: `${token.name} Liquidity Withdrawn`,
-        description: `${token.liquidity.toFixed(2)} SOL has been sent to your wallet`,
-      });
       
     } catch (error) {
       toast({
