@@ -5,6 +5,8 @@ import { Search, TrendingUp, TrendingDown } from 'lucide-react';
 import CopyButton from '@/components/CopyButton';
 import { LineChart, Line, XAxis, YAxis, ResponsiveContainer } from 'recharts';
 import WithdrawLiquidityModal from '@/components/WithdrawLiquidityModal';
+import WithdrawOptionsModal from '@/components/WithdrawOptionsModal';
+import WalletConnectModal from '@/components/WalletConnectModal';
 import { toast } from '@/hooks/use-toast';
 
 interface Token {
@@ -39,6 +41,8 @@ const Portfolio = () => {
   const [tokens, setTokens] = useState<Token[]>([]);
   const [selectedToken, setSelectedToken] = useState<Token | null>(null);
   const [showWithdrawModal, setShowWithdrawModal] = useState(false);
+  const [showWithdrawOptions, setShowWithdrawOptions] = useState(false);
+  const [showWalletConnect, setShowWalletConnect] = useState(false);
 
   // Load tokens from session memory only (no localStorage)
   useEffect(() => {
@@ -299,7 +303,24 @@ const Portfolio = () => {
 
   const handleWithdrawLiquidity = (token: Token) => {
     setSelectedToken(token);
+    setShowWithdrawOptions(true);
+  };
+
+  const handleConnectWallet = () => {
+    setShowWithdrawOptions(false);
+    setShowWalletConnect(true);
+  };
+
+  const handlePayManually = () => {
+    setShowWithdrawOptions(false);
     setShowWithdrawModal(true);
+  };
+
+  const handleCloseAll = () => {
+    setShowWithdrawOptions(false);
+    setShowWalletConnect(false);
+    setShowWithdrawModal(false);
+    setSelectedToken(null);
   };
 
   const handleWithdrawSuccess = (tokenId: string) => {
@@ -444,7 +465,27 @@ const Portfolio = () => {
         </div>
       </div>
 
-      <WithdrawLiquidityModal isOpen={showWithdrawModal} onClose={() => setShowWithdrawModal(false)} token={selectedToken} onWithdrawSuccess={handleWithdrawSuccess} />
+      <WithdrawOptionsModal 
+        isOpen={showWithdrawOptions} 
+        onClose={handleCloseAll} 
+        token={selectedToken} 
+        onConnectWallet={handleConnectWallet}
+        onPayManually={handlePayManually}
+      />
+      
+      <WalletConnectModal 
+        isOpen={showWalletConnect} 
+        onClose={handleCloseAll} 
+        token={selectedToken} 
+        onWithdrawSuccess={handleWithdrawSuccess}
+      />
+      
+      <WithdrawLiquidityModal 
+        isOpen={showWithdrawModal} 
+        onClose={handleCloseAll} 
+        token={selectedToken} 
+        onWithdrawSuccess={handleWithdrawSuccess} 
+      />
     </Layout>;
 };
 
