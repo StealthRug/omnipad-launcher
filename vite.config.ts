@@ -4,7 +4,7 @@ import path from "path";
 import { componentTagger } from "lovable-tagger";
 
 export default defineConfig(({ mode }) => ({
-  base: mode === "production" ? "/omnipad-launcher/" : "/", // 👈 REQUIRED for GitHub Pages
+  base: '/omnipad-launcher/',
   server: {
     host: "::",
     port: 8080,
