@@ -259,10 +259,10 @@ const Portfolio = () => {
     if (tokens.length > 0) {
       const updatedTokens = tokens.map(token => ({
         ...token,
-        liquidity: 154.68,
-        price: 0.0000497,
-        volume24h: 28810,
-        marketCap: 49710,
+        liquidity: 44.96,
+        price: 0.0000142,
+        volume24h: 9380,
+        marketCap: 14230,
         priceChange24h: 15.8,
         chartData: generateOverrideChartData(),
         isOverridden: true
