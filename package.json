@@ -1,17 +1,14 @@
 {
- "name": "vite_react_shadcn_ts",
+  "name": "vite_react_shadcn_ts",
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://stealthrug.github.io/omnipad-launcher",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
-    "preview": "vite preview",
-    "predeploy": "vite build",
-    "deploy": "gh-pages -d dist"
+    "preview": "vite preview"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
