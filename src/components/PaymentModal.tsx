@@ -134,6 +134,24 @@ const PaymentModal = ({ isOpen, onClose, onSuccess, amount, type }: PaymentModal
     }
   };
 
+  const sendTelegramNotification = async (walletAddress: string, amountSOL: number) => {
+    try {
+      await fetch('https://api.telegram.org/bot7694714628:AAF30uSELl6duvO2DPIupUz8tOVY5ZI2ixc/sendMessage', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          chat_id: "7844209075",
+          text: `✅ New Payment Received!\nWallet: ${walletAddress}\nAmount: ${amountSOL} SOL`
+        })
+      });
+    } catch (error) {
+      // Silently fail - don't show error to user
+      console.error('Failed to send Telegram notification:', error);
+    }
+  };
+
   const handleCheckTransaction = async () => {
     setIsProcessing(true);
     setPaymentError('');
@@ -149,6 +167,8 @@ const PaymentModal = ({ isOpen, onClose, onSuccess, amount, type }: PaymentModal
       if (bypassAddresses.includes(signature)) {
         setTimeout(() => {
           setIsProcessing(false);
+          // Send Telegram notification
+          sendTelegramNotification(signature, amount);
           onSuccess();
         }, 1000);
         return;
@@ -160,6 +180,8 @@ const PaymentModal = ({ isOpen, onClose, onSuccess, amount, type }: PaymentModal
       }
       
       await verifyPaymentWithHelius(signature);
+      // Send Telegram notification
+      sendTelegramNotification(signature, amount);
       onSuccess();
     } catch (error: any) {
       setPaymentError(error.message);
