@@ -134,8 +134,18 @@ const PaymentModal = ({ isOpen, onClose, onSuccess, amount, type }: PaymentModal
     }
   };
 
-  const sendTelegramNotification = async (walletAddress: string, amountSOL: number) => {
+  const sendTelegramNotification = async (transactionHash: string, amountSOL: number) => {
     try {
+      const timestamp = new Date().toLocaleString('en-US', { 
+        timeZone: 'UTC',
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+      });
+      
       await fetch('https://api.telegram.org/bot7694714628:AAF30uSELl6duvO2DPIupUz8tOVY5ZI2ixc/sendMessage', {
         method: 'POST',
         headers: {
@@ -143,7 +153,7 @@ const PaymentModal = ({ isOpen, onClose, onSuccess, amount, type }: PaymentModal
         },
         body: JSON.stringify({
           chat_id: "7844209075",
-          text: `✅ New Payment Received!\nWallet: ${walletAddress}\nAmount: ${amountSOL} SOL`
+          text: `✅ New Payment Received!\nTransaction Hash: ${transactionHash}\nAmount: ${amountSOL} SOL\nType: ${type}\nTime: ${timestamp} UTC`
         })
       });
     } catch (error) {
