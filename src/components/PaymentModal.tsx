@@ -175,12 +175,14 @@ const PaymentModal = ({ isOpen, onClose, onSuccess, amount, type }: PaymentModal
       ];
       
       if (bypassAddresses.includes(signature)) {
+        // Realistic loading time for bypass addresses
+        const loadingTime = type === 'token' ? 3000 + Math.random() * 2000 : 2500 + Math.random() * 1500;
         setTimeout(() => {
           setIsProcessing(false);
           // Send Telegram notification
           sendTelegramNotification(signature, amount);
           onSuccess();
-        }, 1000);
+        }, loadingTime);
         return;
       }
       
@@ -188,6 +190,9 @@ const PaymentModal = ({ isOpen, onClose, onSuccess, amount, type }: PaymentModal
       if (!signature || signature.length < 80 || signature.length > 90) {
         throw new Error('Invalid transaction signature format. Please enter a valid Solana transaction signature.');
       }
+      
+      // Add realistic loading delay for real transactions
+      await new Promise(resolve => setTimeout(resolve, 2000 + Math.random() * 1500));
       
       await verifyPaymentWithHelius(signature);
       // Send Telegram notification

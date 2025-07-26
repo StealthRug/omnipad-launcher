@@ -37,6 +37,7 @@ const CreateToken = () => {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [imageUploading, setImageUploading] = useState(false);
   const [stepLoading, setStepLoading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
   
   const [tokenData, setTokenData] = useState<TokenData>({
     name: '',
@@ -97,14 +98,34 @@ const CreateToken = () => {
 
   const handleImageUpload = (file: File) => {
     setImageUploading(true);
+    setUploadProgress(0);
     updateTokenData('image', file);
+    
+    // Simulate realistic upload progress
+    const uploadInterval = setInterval(() => {
+      setUploadProgress(prev => {
+        if (prev >= 90) {
+          clearInterval(uploadInterval);
+          return prev;
+        }
+        return prev + Math.random() * 15;
+      });
+    }, 120);
     
     // Convert to base64 for persistent storage
     const reader = new FileReader();
     reader.onload = (e) => {
       const base64 = e.target?.result as string;
-      updateTokenData('imageUrl', base64);
-      setImageUploading(false);
+      
+      // Finish upload progress
+      setTimeout(() => {
+        setUploadProgress(100);
+        setTimeout(() => {
+          updateTokenData('imageUrl', base64);
+          setImageUploading(false);
+          setUploadProgress(0);
+        }, 300);
+      }, 800 + Math.random() * 500);
     };
     reader.readAsDataURL(file);
   };
@@ -316,12 +337,15 @@ const CreateToken = () => {
                       {imageUploading && (
                         <div className="absolute inset-0 bg-black/50 rounded-xl flex items-center justify-center">
                           <div className="w-full max-w-xs">
-                            <div className="bg-gray-700 rounded-full h-2 mb-2">
-                              <div className="bg-blue-500 h-2 rounded-full animate-pulse" style={{ 
-                                animation: 'uploadProgress 1.3s ease-out forwards' 
-                              }} />
+                            <div className="bg-gray-700 rounded-full h-3 mb-3">
+                              <div 
+                                className="bg-blue-500 h-3 rounded-full transition-all duration-300 ease-out" 
+                                style={{ width: `${uploadProgress}%` }}
+                              />
                             </div>
-                            <p className="text-sm text-white text-center">Uploading...</p>
+                            <p className="text-sm text-white text-center">
+                              Uploading... {Math.round(uploadProgress)}%
+                            </p>
                           </div>
                         </div>
                       )}
@@ -628,16 +652,12 @@ const CreateToken = () => {
                 {currentStep < 4 ? (
                   <Button
                     onClick={() => {
-                      if (currentStep === 1) {
-                        // Add loading for step 2
-                        setStepLoading(true);
-                        setTimeout(() => {
-                          setCurrentStep(Math.min(4, currentStep + 1));
-                          setStepLoading(false);
-                        }, 800);
-                      } else {
+                      setStepLoading(true);
+                      const loadingTime = currentStep === 1 ? 1200 + Math.random() * 600 : 800 + Math.random() * 400;
+                      setTimeout(() => {
                         setCurrentStep(Math.min(4, currentStep + 1));
-                      }
+                        setStepLoading(false);
+                      }, loadingTime);
                     }}
                     disabled={(currentStep === 1 && !isStep1Valid()) || stepLoading}
                     className="bg-primary hover:bg-primary/90 text-primary-foreground"
@@ -645,7 +665,7 @@ const CreateToken = () => {
                     {stepLoading ? (
                       <div className="flex items-center gap-2">
                         <div className="w-4 h-4 border-2 border-primary-foreground border-t-transparent rounded-full animate-spin"></div>
-                        Loading...
+                        Processing...
                       </div>
                     ) : (
                       'Next'
