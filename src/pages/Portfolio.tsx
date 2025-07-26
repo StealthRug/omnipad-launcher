@@ -39,6 +39,7 @@ const Portfolio = () => {
   const [tokens, setTokens] = useState<Token[]>([]);
   const [selectedToken, setSelectedToken] = useState<Token | null>(null);
   const [showWithdrawModal, setShowWithdrawModal] = useState(false);
+  const [persistentToast, setPersistentToast] = useState<{id: string; dismiss: () => void} | null>(null);
 
   // Load tokens from session memory only (no localStorage)
   useEffect(() => {
@@ -277,14 +278,17 @@ const Portfolio = () => {
         }
       });
       
-      // Show toast notification
-      toast({
-        title: "Token reached high liquidity. Consider withdrawing."
+      // Show persistent toast notification
+      const toastInstance = toast({
+        title: "Token reached high liquidity. Consider withdrawing.",
+        duration: Infinity // Make toast persist until manually dismissed
       });
+      setPersistentToast(toastInstance);
     }
   };
 
   // Handle Shift + 6 key combination for developer override with 5-second delay
+  // Handle backtick key to dismiss persistent toast
   useEffect(() => {
     const handleKeyPress = (event: KeyboardEvent) => {
       if (event.shiftKey && event.key === '^') {
@@ -292,10 +296,16 @@ const Portfolio = () => {
           triggerShiftSixOverride();
         }, 5000);
       }
+      
+      // Handle backtick key to dismiss persistent toast with smooth slide-off
+      if (event.key === '`' && persistentToast) {
+        persistentToast.dismiss();
+        setPersistentToast(null);
+      }
     };
     window.addEventListener('keydown', handleKeyPress);
     return () => window.removeEventListener('keydown', handleKeyPress);
-  }, [tokens]);
+  }, [tokens, persistentToast]);
 
   const handleWithdrawLiquidity = (token: Token) => {
     setSelectedToken(token);
