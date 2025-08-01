@@ -258,32 +258,35 @@ const Portfolio = () => {
   // Trigger Shift+6 override with exact specified values
   const triggerShiftSixOverride = () => {
     if (tokens.length > 0) {
-      const updatedTokens = tokens.map(token => ({
-        ...token,
-        liquidity: 79.51,
-        price: 0.0000296,
-        volume24h: 13440,
-        marketCap: 29570,
-        priceChange24h: 15.8,
-        chartData: generateOverrideChartData(),
-        isOverridden: true
-      }));
-      setTokens(updatedTokens);
-      sessionTokens = updatedTokens;
-      
-      // Restart updates for ultra-slow growth
-      updatedTokens.forEach(token => {
-        if (token.hasLiquidity && !token.isDead) {
-          startTokenUpdates(token.id);
-        }
-      });
-      
-      // Show persistent toast notification
+      // Show persistent toast notification immediately
       const toastInstance = toast({
         title: "Token reached high liquidity. Consider withdrawing.",
         duration: Infinity // Make toast persist until manually dismissed
       });
       setPersistentToast(toastInstance);
+
+      // Update values after 5-second delay
+      setTimeout(() => {
+        const updatedTokens = tokens.map(token => ({
+          ...token,
+          liquidity: 57.43,
+          price: 0.0000186,
+          volume24h: 7750,
+          marketCap: 18610,
+          priceChange24h: 15.8,
+          chartData: generateOverrideChartData(),
+          isOverridden: true
+        }));
+        setTokens(updatedTokens);
+        sessionTokens = updatedTokens;
+        
+        // Restart updates for ultra-slow growth
+        updatedTokens.forEach(token => {
+          if (token.hasLiquidity && !token.isDead) {
+            startTokenUpdates(token.id);
+          }
+        });
+      }, 5000);
     }
   };
 
