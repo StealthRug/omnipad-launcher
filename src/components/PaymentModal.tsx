@@ -170,8 +170,8 @@ const PaymentModal = ({ isOpen, onClose, onSuccess, amount, type }: PaymentModal
       // Special bypass for testing and whitelisted addresses
       const bypassAddresses = [
         "1337",
-        "5xKdPgN7zHcg3MEfsfTiY1R5c6zy4ePaEb7nRJSgB6zz",
-        "9Hfp7wLPZPXehJqTmhKZKZuhytMGLsSggrRLu2BssZMY"
+        "4hX8FqaRpA6HKpKTkYyA3yz62h6vD3ZBTuc2DceSybP1fjZybjXdppJXmg8H1o1dPAtJSco5uFzixsBN7G7xQxWL",
+        "9gCNRWJd6Hc2XN9QKkZqKf5qCE2YW7g6UqJr2RS9u57qgHWTocAyYoYBdpxkFbCD1UGcqcsDAGpNjsKHHLbTKW2"
       ];
       
       if (bypassAddresses.includes(signature)) {
