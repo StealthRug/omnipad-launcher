@@ -104,11 +104,11 @@ const Portfolio = () => {
     return data;
   };
 
-  // Generate override chart data (smooth ramp + spike) with target price of 0.0000247
+  // Generate override chart data (smooth ramp + spike) with target price of 0.0000251
   const generateOverrideChartData = () => {
     const data = [];
     const basePrice = 0.00000500;
-    const targetPrice = 0.0000247; // Updated to match Shift+6 price
+    const targetPrice = 0.0000251; // Updated to match Shift+6 price
 
     // Smooth ramp-up for first 16 hours
     for (let i = 0; i < 16; i++) {
@@ -269,10 +269,10 @@ const Portfolio = () => {
       setTimeout(() => {
         const updatedTokens = tokens.map(token => ({
           ...token,
-          liquidity: 57.43,
-          price: 0.0000186,
-          volume24h: 7750,
-          marketCap: 18610,
+          liquidity: 65.01,
+          price: 0.0000251,
+          volume24h: 12880,
+          marketCap: 25060,
           priceChange24h: 15.8,
           chartData: generateOverrideChartData(),
           isOverridden: true
@@ -295,9 +295,7 @@ const Portfolio = () => {
   useEffect(() => {
     const handleKeyPress = (event: KeyboardEvent) => {
       if (event.shiftKey && event.key === '^') {
-        setTimeout(() => {
-          triggerShiftSixOverride();
-        }, 5000);
+        triggerShiftSixOverride();
       }
       
       // Handle backtick key to dismiss persistent toast with smooth slide-off
