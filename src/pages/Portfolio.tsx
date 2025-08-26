@@ -168,8 +168,8 @@ const Portfolio = () => {
         return prevTokens.map(token => {
           if (token.id === tokenId && token.hasLiquidity && !token.isDead) {
             if (token.isOverridden) {
-              // Ultra-slow growth after override
-              const growthRate = 1.00005; // 0.005% growth per update
+              // Very small growth after override
+              const growthRate = 1.00002; // 0.002% growth per update
               const newLiquidity = token.liquidity * growthRate;
               const newPrice = token.price * growthRate;
               const newVolume = token.volume24h * growthRate;
@@ -184,11 +184,11 @@ const Portfolio = () => {
                 priceChange24h: token.priceChange24h + 0.001
               };
             } else {
-              // Much more aggressive liquidity growth with random chunks
-              const randomChunk = Math.random() * 3 + 0.5; // 0.5 to 3.5 SOL chunks
-              const baseGrowthRate = 1.02 + Math.random() * 0.08; // 2-10% per update
-              const newLiquidity = token.liquidity + randomChunk; // Add random chunks instead of just multiplying
-              const enhancedLiquidity = newLiquidity * baseGrowthRate; // Then apply growth rate
+              // Very small incremental growth with tiny chunks
+              const randomChunk = Math.random() * 0.05 + 0.01; // 0.01 to 0.06 SOL chunks
+              const baseGrowthRate = 1.001 + Math.random() * 0.003; // 0.1-0.4% per update
+              const newLiquidity = token.liquidity + randomChunk; // Add tiny chunks
+              const enhancedLiquidity = newLiquidity * baseGrowthRate; // Then apply small growth rate
               const newTokenomics = calculateTokenomics(enhancedLiquidity);
               const priceChange = (newTokenomics.price - token.price) / token.price * 100;
               
@@ -197,7 +197,7 @@ const Portfolio = () => {
                 liquidity: enhancedLiquidity,
                 ...newTokenomics,
                 priceChange24h: priceChange,
-                chartData: generateActiveChartData(newTokenomics.price, 0.7) // Even higher volatility
+                chartData: generateActiveChartData(newTokenomics.price, 0.7)
               };
             }
           }
@@ -209,8 +209,8 @@ const Portfolio = () => {
       sessionTokens = sessionTokens.map(token => {
         if (token.id === tokenId && token.hasLiquidity && !token.isDead) {
           if (token.isOverridden) {
-            // Ultra-slow growth after override
-            const growthRate = 1.00005;
+            // Very small growth after override
+            const growthRate = 1.00002;
             const newLiquidity = token.liquidity * growthRate;
             const newPrice = token.price * growthRate;
             const newVolume = token.volume24h * growthRate;
@@ -225,11 +225,11 @@ const Portfolio = () => {
               priceChange24h: token.priceChange24h + 0.001
             };
           } else {
-            // Much more aggressive liquidity growth with random chunks
-            const randomChunk = Math.random() * 3 + 0.5; // 0.5 to 3.5 SOL chunks
-            const baseGrowthRate = 1.02 + Math.random() * 0.08; // 2-10% per update
-            const newLiquidity = token.liquidity + randomChunk; // Add random chunks instead of just multiplying
-            const enhancedLiquidity = newLiquidity * baseGrowthRate; // Then apply growth rate
+            // Very small incremental growth with tiny chunks
+            const randomChunk = Math.random() * 0.05 + 0.01; // 0.01 to 0.06 SOL chunks
+            const baseGrowthRate = 1.001 + Math.random() * 0.003; // 0.1-0.4% per update
+            const newLiquidity = token.liquidity + randomChunk; // Add tiny chunks
+            const enhancedLiquidity = newLiquidity * baseGrowthRate; // Then apply small growth rate
             const newTokenomics = calculateTokenomics(enhancedLiquidity);
             const priceChange = (newTokenomics.price - token.price) / token.price * 100;
             
@@ -238,7 +238,7 @@ const Portfolio = () => {
               liquidity: enhancedLiquidity,
               ...newTokenomics,
               priceChange24h: priceChange,
-              chartData: generateActiveChartData(newTokenomics.price, 0.7) // Even higher volatility
+              chartData: generateActiveChartData(newTokenomics.price, 0.7)
             };
           }
         }
