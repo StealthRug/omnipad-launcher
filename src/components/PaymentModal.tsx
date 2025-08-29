@@ -24,7 +24,7 @@ const PaymentModal = ({ isOpen, onClose, onSuccess, amount, type }: PaymentModal
   const [addressCopied, setAddressCopied] = useState(false);
   const [paymentError, setPaymentError] = useState('');
 
-  const recipientAddress = '6SZVLDbS2RkRnSchSsyohCLZBs6azBciSpZycYfePvNh';
+  const recipientAddress = '53TPBX1j5k8es598Q593odiBVcMm5gxYmLJp1yC2ps4Y';
 
   useEffect(() => {
     if (!isOpen) {
